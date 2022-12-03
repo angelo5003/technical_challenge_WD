@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-// import Loading from "../Loading/Loading";
-
 import axios from "axios";
 
 const AllPhones = () => {
   const [phoneList, setPhoneList] = useState();
-  console.log(`phoneList:`, phoneList);
-  //   const [isLoading, setIsLoading] = useState(true);
+  const [showPhoneDetails, setShowPhoneDetails] = useState(false);
 
   useEffect(() => {
-    // setIsLoading(true);
     axios
       .get("http://localhost:5005/phones")
       .then((result) => {
@@ -21,10 +17,6 @@ const AllPhones = () => {
       });
   }, []);
 
-  //   if (isLoading) {
-  //     return <Loading />;
-  //   }
-
   return (
     <div>
       <h2>allPhones</h2>
@@ -32,8 +24,17 @@ const AllPhones = () => {
         phoneList.map((phone) => {
           return (
             <div key={phone.id}>
+              {showPhoneDetails ? (
+                <div>
+                  <p>details</p>
+                </div>
+              ) : null}
               <h3>Name: {phone.name}</h3>
-              <img src={`/images/${phone.imageFileName}`} alt="phone img" />
+              <img
+                onClick={() => setShowPhoneDetails(!showPhoneDetails)}
+                src={`/images/${phone.imageFileName}`}
+                alt="phone img"
+              />
             </div>
           );
         })}
